@@ -1,0 +1,39 @@
+server:
+  port: 9090
+  
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+      
+zuul:
+  prefix: /api
+  routes:
+    test:
+      path: /redirect/**
+      url: http://example.org
+    customer-by-address:
+      path: /customer-by-address/**
+      url: http://localhost:9098
+    customer-by-service:
+      path: /customer-by-service/**
+      serviceId: customer-servic
+      
+spring:
+  application:
+    name: zuul-server
+    
+slack:
+  client:
+    clientId: "237895291120.241002501221"
+    clientSecret: 79c83d653ca6fb2dcd6b74d79bfa6cfc
+    accessTokenUri: https://slack.com/api/oauth.access
+    userAuthorizationUri: https://slack.com/oauth/authorize
+    tokenName: token
+    authenticationScheme: query
+    clientAuthenticationScheme: form
+    scope: identity.basic,identity.team,identity.email,identity.avatar
+  resource:
+    userInfoUri: https://slack.com/api/users.identity
+    tokenType: Bearer
+    preferTokenInfo: false
